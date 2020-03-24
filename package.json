@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "description": "A Datashare Plugin to add a sentence case button to the extracted text view.",
   "main": "dist/index.umd.min.js",
-  "dependencies": {},
+  "dependencies": {
+    "sentence-case": "^3.0.3"
+  },
   "devDependencies": {},
   "private": false,
   "scripts": {

@@ -1,10 +1,6 @@
+import { sentenceCase } from "sentence-case"
+
 document.addEventListener('datashare:ready', ({ detail }) => {
-  // A quick-and-dirty sentence-case function
-  const toSentenceCase = function (str) {
-    return str.toLowerCase().split(' ').map(function(word) {
-      return (word.charAt(0).toUpperCase() + word.slice(1))
-    }).join(' ')
-  }
 
   // The project in which we'll add the plugin
   const project = detail.core.config.get('sentenceCaseProject', 'local-datashare')
@@ -33,8 +29,10 @@ document.addEventListener('datashare:ready', ({ detail }) => {
         registerPipeline () {
           this.$core.registerPipelineForProject(project, {
             name: this.pipelineName,
-            category: 'extracted-text:post',
-            type: toSentenceCase
+            category: 'extracted-text:pre',
+            type: text => {
+              return text.split(/\n|\r/g).map(sentenceCase).join('\n')
+            }
           })
         },
         unregisterPipeline () {
@@ -43,7 +41,7 @@ document.addEventListener('datashare:ready', ({ detail }) => {
       },
       template: `<div class="document__content__sentence-case py-1 font-weight-bold mb-3">
         <b-form-checkbox v-model="toggler" switch>
-          Improve readability
+          To Sentence Case
         </b-form-checkbox>
       </div>`
     }
