@@ -11,7 +11,7 @@ document.addEventListener('datashare:ready', ({ detail }) => {
   const toSentenceCase = str => {
     const sentences = tokenizer
       // Detect sentences using Sentence Boundary Detection (SBD)
-      .sentences(str, { preserve_whitespace: false, newline_boundaries: true })
+      .sentences(str, { preserve_whitespace: false, newline_boundaries: false })
       .map(sentence => {
         const sanitizedSentence = stripHtml(sentence)
         // Only if the string is all in uppercase
@@ -32,6 +32,7 @@ document.addEventListener('datashare:ready', ({ detail }) => {
   detail.core.registerHookForProject(project, {
     name: 'sentence-case-toggler',
     target: 'document.content.ner:after',
+    order: -1,
     definition: {
       computed: {
         pipelineName () {
@@ -53,7 +54,8 @@ document.addEventListener('datashare:ready', ({ detail }) => {
           this.$core.registerPipelineForProject(project, {
             name: this.pipelineName,
             category: 'extracted-text:post',
-            type: toSentenceCase
+            type: toSentenceCase,
+            order: 10
           })
         },
         unregisterPipeline () {
