@@ -2,20 +2,27 @@ import tokenizer from 'sbd'
 
 document.addEventListener('datashare:ready', ({ detail }) => {
 
+  const stripHtml = html => {
+     const tag = document.createElement("DIV")
+     tag.innerHTML = html
+     return tag.textContent || tag.innerText || ""
+  }
+
   const toSentenceCase = (str) => {
     const sentences = tokenizer
       // Detect sentences using Sentence Boundary Detection (SBD)
-      .sentences(str.split(/\r|\n/).join(' '))
+      .sentences(str, { preserve_whitespace: false, newline_boundaries: true })
       .map(sentence => {
+        const sanitizedSentence = stripHtml(sentence)
         // Only if the string is all in uppercase
-         if (sentence === sentence.toUpperCase()) {
+         if (sanitizedSentence === sanitizedSentence.toUpperCase()) {
            sentence = sentence.toLowerCase()
            sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1)
          }
          return sentence
       })
 
-    return sentences.join('\n')
+    return sentences.join('</p>')
   }
 
   // The project in which we'll add the plugin
@@ -45,7 +52,7 @@ document.addEventListener('datashare:ready', ({ detail }) => {
         registerPipeline () {
           this.$core.registerPipelineForProject(project, {
             name: this.pipelineName,
-            category: 'extracted-text:pre',
+            category: 'extracted-text:post',
             type: toSentenceCase
           })
         },
@@ -55,7 +62,7 @@ document.addEventListener('datashare:ready', ({ detail }) => {
       },
       template: `<div class="document__content__sentence-case py-1 font-weight-bold mb-3">
         <b-form-checkbox v-model="toggler" switch>
-          To Sentence Case
+          Sentence Case
         </b-form-checkbox>
       </div>`
     }
