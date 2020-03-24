@@ -2,13 +2,13 @@ import tokenizer from 'sbd'
 
 document.addEventListener('datashare:ready', ({ detail }) => {
 
-  const stripHtml = html => {
+  const stripHtml = str => {
      const tag = document.createElement("DIV")
-     tag.innerHTML = html
+     tag.innerHTML = str
      return tag.textContent || tag.innerText || ""
   }
 
-  const toSentenceCase = (str) => {
+  const toSentenceCase = str => {
     const sentences = tokenizer
       // Detect sentences using Sentence Boundary Detection (SBD)
       .sentences(str, { preserve_whitespace: false, newline_boundaries: true })
