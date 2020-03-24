@@ -1,6 +1,22 @@
-import { sentenceCase } from "sentence-case"
+import tokenizer from 'sbd'
 
 document.addEventListener('datashare:ready', ({ detail }) => {
+
+  const toSentenceCase = (str) => {
+    const sentences = tokenizer
+      // Detect sentences using Sentence Boundary Detection (SBD)
+      .sentences(str.split(/\r|\n/).join(' '))
+      .map(sentence => {
+        // Only if the string is all in uppercase
+         if (sentence === sentence.toUpperCase()) {
+           sentence = sentence.toLowerCase()
+           sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1)
+         }
+         return sentence
+      })
+
+    return sentences.join('\n')
+  }
 
   // The project in which we'll add the plugin
   const project = detail.core.config.get('sentenceCaseProject', 'local-datashare')
@@ -30,9 +46,7 @@ document.addEventListener('datashare:ready', ({ detail }) => {
           this.$core.registerPipelineForProject(project, {
             name: this.pipelineName,
             category: 'extracted-text:pre',
-            type: text => {
-              return text.split(/\n|\r/g).map(sentenceCase).join('\n')
-            }
+            type: toSentenceCase
           })
         },
         unregisterPipeline () {
