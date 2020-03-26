@@ -62,7 +62,7 @@ document.addEventListener('datashare:ready', ({ detail }) => {
           this.$core.unregisterPipeline(this.pipelineName)
         }
       },
-      template: `<div class="document__content__sentence-case py-1 font-weight-bold mb-3 ml-3">
+      template: `<div class="document__content__sentence-case py-1 font-weight-bold ml-3">
         <b-form-checkbox v-model="toggler" switch>
           Sentence Case
         </b-form-checkbox>
