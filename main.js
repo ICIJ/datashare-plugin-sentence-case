@@ -63,7 +63,7 @@ document.addEventListener('datashare:ready', ({ detail }) => {
         }
       },
       template: `<div class="document__content__sentence-case py-1 font-weight-bold ml-3">
-        <b-form-checkbox v-model="toggler" switch>
+        <b-form-checkbox v-model="toggler" switch v-b-tooltip title="Turn caps lock sentences back to normal">
           Sentence Case
         </b-form-checkbox>
       </div>`
