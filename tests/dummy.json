@@ -1,0 +1,26 @@
+{
+  "nerTags":[],
+  "metadata":{
+    "tika_metadata_content_encoding":"ISO-8859-1",
+    "tika_metadata_resourcename":"dummy.txt",
+    "tika_metadata_x_parsed_by":"org.apache.tika.parser.DefaultParser,org.apache.tika.parser.csv.TextAndCSVParser",
+    "tika_metadata_x_tika_digest_sha384":"2424523916fd4720b9bd276082887b211608b51e9485aa309c3837f83a0a78079c36918533bc36f1099ceb52eeb53063",
+    "tika_metadata_content_type":"text/plain; charset=ISO-8859-1",
+    "tika_metadata_content_length":"447"
+  },
+  "extractionLevel":0,
+  "language":"ENGLISH",
+  "type":"Document",
+  "dirname":"/home/datashare/vault",
+  "extractionDate":"2020-03-27T15:58:24.163+01:00",
+  "content":"LOREM IPSUM DOLOR SIT AMET. CONSECTETUR ADIPISICING ELIT.",
+  "tags":[],
+  "path":"/home/datashare/vault/dummy.txt",
+  "contentEncoding":"ISO-8859-1",
+  "contentLength":447,
+  "join":{
+    "name":"Document"
+  },
+  "contentType":"text/plain",
+  "status":"INDEXED"
+}
