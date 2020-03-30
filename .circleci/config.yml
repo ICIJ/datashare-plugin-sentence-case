@@ -15,9 +15,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install Java JRE
-          command: sudo apt-get install default-jre
-      - run:
           name: Build Datashare package name
           command: echo 'export DATASHARE_PACKAGE="datashare-dist_${DATASHARE_VERSION}_all.deb"'  >> $BASH_ENV
       - run:
