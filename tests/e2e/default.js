@@ -21,11 +21,13 @@ module.exports = {
     browser.url('http://localhost:8008/#/d/local-datashare/b53063')
     // Wait for the document to be loaded
     browser.waitForElementVisible('.document-content')
-    // The document must have the same content that the test document
-    browser.expect.element('.document-content__body').text.to.equal(document.content)
     // Activate sentence case filter
     browser.click('.document__content__sentence-case label')
     // The content must be different now
     browser.expect.element('.document-content__body').text.to.equal('Lorem ipsum dolor sit amet.\nConsectetur adipisicing elit.')
+    // Dectivate sentence case filter
+    browser.click('.document__content__sentence-case label')
+    // The document must have the same content that the test document
+    browser.expect.element('.document-content__body').text.to.equal(document.content)
   }
 };
