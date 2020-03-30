@@ -22,7 +22,7 @@ jobs:
           command: wget "https://github.com/ICIJ/datashare-installer/releases/download/${DATASHARE_VERSION}/${DATASHARE_PACKAGE}"
       - run:
           name: Install Datashare
-          command: sudo apt install $DATASHARE_PACKAGE
+          command: sudo apt install ./$DATASHARE_PACKAGE
       - run:
           name: Run Datashare in background
           command: mkdir -p tmp && yarn run test:datashare
