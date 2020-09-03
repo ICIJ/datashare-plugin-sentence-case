@@ -5,3 +5,4 @@ geckodriver.log
 tests_output
 package
 tmp
+.idea
