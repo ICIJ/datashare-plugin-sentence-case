@@ -1,0 +1,73 @@
+name: Sentence Case Plugin - CI
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DATASHARE_VERSION: '16.0.3'
+      DATASHARE_PACKAGE: 'datashare-16.0.3.deb'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.19.1'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Download Datashare for Debian
+        run: wget "https://github.com/ICIJ/datashare-installer/releases/download/${{ env.DATASHARE_VERSION }}/${{ env.DATASHARE_PACKAGE }}"
+
+      - name: Install Datashare
+        run: sudo apt install -y ./${{ env.DATASHARE_PACKAGE }}
+
+      - name: Run Datashare in background
+        run: mkdir -p tmp && yarn run test:datashare &
+      
+      - name: Run all tests
+        run: yarn test
+
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/v')
+    env:
+      DATASHARE_VERSION: '16.0.3'
+      DATASHARE_PACKAGE: 'datashare-16.0.3.deb'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.19.1'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Make distribution
+        run: yarn build
+
+      - name: Create release assets
+        run: |
+          mkdir datashare-plugin-sentence-case-${{ github.ref_name }}
+          cp package.json datashare-plugin-sentence-case-${{ github.ref_name }}
+          cp -R dist datashare-plugin-sentence-case-${{ github.ref_name }}
+          tar czf datashare-plugin-sentence-case-${{ github.ref_name }}.tgz datashare-plugin-sentence-case-${{ github.ref_name }}
+          zip -r datashare-plugin-sentence-case-${{ github.ref_name }}.zip datashare-plugin-sentence-case-${{ github.ref_name }}
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            datashare-plugin-sentence-case-${{ github.ref_name }}.tgz
+            datashare-plugin-sentence-case-${{ github.ref_name }}.zip
