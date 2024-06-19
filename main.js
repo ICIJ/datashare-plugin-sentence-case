@@ -11,7 +11,7 @@ document.addEventListener('datashare:ready', ({ detail }) => {
   const toSentenceCase = str => {
     const sentences = tokenizer
       // Detect sentences using Sentence Boundary Detection (SBD)
-      .sentences(str, { preserve_whitespace: false, newline_boundaries: false })
+      .sentences(str, { preserve_whitespace: false, newline_boundaries: true })
       .map(sentence => {
         const sanitizedSentence = stripHtml(sentence)
         // Only if the string is all in uppercase
