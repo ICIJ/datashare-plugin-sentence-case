@@ -5,11 +5,11 @@ const { main } = require('../../package.json')
 module.exports = {
   before: function () {
     // Add a document in CAPSLOCK in Datashare using ElasticSearch API
-    return axios.post('http://localhost:9200/local-datashare/doc/b53063', document)
+    return axios.post('http://localhost:9200/local-datashare/_doc/b53063', document)
   },
   after: function () {
     // Delete the document
-    return axios.delete('http://localhost:9200/local-datashare/doc/b53063')
+    return axios.delete('http://localhost:9200/local-datashare/_doc/b53063')
   },
   'default configuration test': function (browser) {
     browser.url('http://localhost:8008')
@@ -18,7 +18,7 @@ module.exports = {
     // Is the script injected correctly?
     browser.expect.element(`script[src="/plugins/package/${main}"]`).to.be.present
   },
-  'it convert text to sentence case': !function() {
+  'it convert text to sentence case': function() {
     // Move to a document
     browser.url('http://localhost:8008/#/d/local-datashare/b53063')
     // Wait for the document to be loaded

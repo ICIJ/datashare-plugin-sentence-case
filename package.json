@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
+    "axios": "^1.7.2",
     "geckodriver": "^4.4.1",
     "nightwatch": "^3.6.3",
     "vite": "^5.3.1",
