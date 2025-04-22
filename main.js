@@ -44,9 +44,12 @@ document.addEventListener('datashare:ready', ({ detail }) => {
             return active ? this.registerPipeline() : this.unregisterPipeline()
           },
           get () {
-            const pipelinesStore = this.$core.stores.usePipelinesStore()
-            // True is the pipeline is activate
-            return !!pipelinesStore.getPipelineByName(this.pipelineName)
+            // Duck-typing to check if we use multiple stores (like in the new design)
+            if (this.$core.stores) {
+              const pipelinesStore = this.$core.stores.usePipelinesStore()
+              return !!pipelinesStore.getPipelineByName(this.pipelineName)
+            }
+            return !!this.$store.getters['pipelines/getPipelineByName'](this.pipelineName)
           }
         }
       },
