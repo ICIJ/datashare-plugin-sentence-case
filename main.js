@@ -63,7 +63,7 @@ document.addEventListener('datashare:ready', ({ detail }) => {
           this.$core.unregisterPipeline(this.pipelineName)
         }
       },
-      template: `<div class="document__content__sentence-case alert alert-light border float-right">
+      template: `<div class="document__content__sentence-case alert alert-light border">
         <div class="form-check">
           <input type="checkbox" v-model="toggler" class="form-check-input" id="toggle-sentence-case" />
           <label class="form-check-label" for="toggle-sentence-case">Fix capitalization</label>
