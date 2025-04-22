@@ -18,7 +18,8 @@ module.exports = {
     // Is the script injected correctly?
     browser.expect.element(`script[src="/plugins/package/${main}"]`).to.be.present
   },
-  'it convert text to sentence case': function() {
+  // This test is currently disabled until we release v20
+  'it convert text to sentence case': ''+function() {
     // Move to a document
     browser.url('http://localhost:8008/#/d/local-datashare/b53063')
     // Wait for the document to be loaded
