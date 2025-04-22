@@ -31,7 +31,7 @@ document.addEventListener('datashare:ready', ({ detail }) => {
   // Register the hook only for the given project
   detail.core.registerHookForProject(project, {
     name: 'sentence-case-toggler',
-    target: 'document.content.ner:after',
+    target: 'document.content.body:before',
     order: -1,
     definition: {
       computed: {
@@ -44,7 +44,11 @@ document.addEventListener('datashare:ready', ({ detail }) => {
             return active ? this.registerPipeline() : this.unregisterPipeline()
           },
           get () {
-            // True is the pipeline is activate
+            // Duck-typing to check if we use multiple stores (like in the new design)
+            if (this.$core.stores) {
+              const pipelinesStore = this.$core.stores.usePipelinesStore()
+              return !!pipelinesStore.getPipelineByName(this.pipelineName)
+            }
             return !!this.$store.getters['pipelines/getPipelineByName'](this.pipelineName)
           }
         }
@@ -62,10 +66,11 @@ document.addEventListener('datashare:ready', ({ detail }) => {
           this.$core.unregisterPipeline(this.pipelineName)
         }
       },
-      template: `<div class="document__content__sentence-case py-1 font-weight-bold ml-3">
-        <b-form-checkbox v-model="toggler" switch v-b-tooltip title="Turn caps lock sentences back to normal">
-          Sentence Case
-        </b-form-checkbox>
+      template: `<div class="document__content__sentence-case alert alert-light border">
+        <div class="form-check">
+          <input type="checkbox" v-model="toggler" class="form-check-input" id="toggle-sentence-case" />
+          <label class="form-check-label" for="toggle-sentence-case">Fix capitalization</label>
+        </div>
       </div>`
     }
   })
