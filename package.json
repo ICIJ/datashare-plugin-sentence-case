@@ -20,7 +20,7 @@
   "scripts": {
     "test:e2e": "nightwatch",
     "test:pack": "mkdir -p ./tmp && cat \"$(npm pack)\" | tar zxvf - -C ./tmp",
-    "test:datashare": "datashare --tcpListenPort 8008 --pluginsDir=$(pwd)/tmp",
+    "test:datashare": "datashare --tcpListenPort 8080 --pluginsDir=$(pwd)/tmp",
     "test:clean": "rm *.tgz || /bin/true",
     "test": "yarn test:e2e",
     "pretest": "yarn build && yarn test:pack",

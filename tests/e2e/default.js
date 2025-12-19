@@ -12,7 +12,7 @@ module.exports = {
     return axios.delete('http://localhost:9200/local-datashare/_doc/b53063')
   },
   'default configuration test': function (browser) {
-    browser.url('http://localhost:8008')
+    browser.url('http://localhost:8080')
     // Wait for the app to be started
     browser.waitForElementVisible('.landing')
     // Is the script injected correctly?
@@ -21,7 +21,7 @@ module.exports = {
   // This test is currently disabled until we release v20
   'it convert text to sentence case': ''+function() {
     // Move to a document
-    browser.url('http://localhost:8008/#/d/local-datashare/b53063')
+    browser.url('http://localhost:8080/#/d/local-datashare/b53063')
     // Wait for the document to be loaded
     browser.waitForElementVisible('.document-content')
     // Activate sentence case filter
