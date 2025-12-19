@@ -1,8 +1,9 @@
 dist
 node_modules
-icij-datashare-plugin-site-alert-*.tgz
+icij-datashare-plugin-*.tgz
 geckodriver.log
 tests_output
 package
 tmp
 .idea
+logs
