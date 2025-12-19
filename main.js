@@ -3,9 +3,10 @@ import tokenizer from 'sbd'
 document.addEventListener('datashare:ready', ({ detail }) => {
 
   const stripHtml = str => {
-     const tag = document.createElement("DIV")
-     tag.innerHTML = str
-     return tag.textContent || tag.innerText || ""
+     // Use DOMParser to safely parse HTML without executing scripts
+     const parser = new DOMParser()
+     const doc = parser.parseFromString(str, 'text/html')
+     return doc.body.textContent || ""
   }
 
   const toSentenceCase = str => {
