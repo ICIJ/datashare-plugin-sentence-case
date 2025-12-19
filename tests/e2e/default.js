@@ -14,7 +14,7 @@ module.exports = {
   'default configuration test': function (browser) {
     browser.url('http://localhost:8080')
     // Wait for the app to be started
-    browser.waitForElementVisible('.landing')
+    browser.waitForElementVisible('.app')
     // Is the script injected correctly?
     browser.expect.element(`script[src="/plugins/package/${main}"]`).to.be.present
   },
