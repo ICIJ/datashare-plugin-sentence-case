@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify'
 import tokenizer from 'sbd'
 
 document.addEventListener('datashare:ready', ({ detail }) => {
@@ -10,13 +11,15 @@ document.addEventListener('datashare:ready', ({ detail }) => {
   }
 
   const toSentenceCase = str => {
+    // Sanitize input HTML to remove any malicious content
+    const sanitizedStr = DOMPurify.sanitize(str)
     const sentences = tokenizer
       // Detect sentences using Sentence Boundary Detection (SBD)
-      .sentences(str, { preserve_whitespace: false, newline_boundaries: true })
+      .sentences(sanitizedStr, { preserve_whitespace: false, newline_boundaries: true })
       .map(sentence => {
-        const sanitizedSentence = stripHtml(sentence)
+        const textContent = stripHtml(sentence)
         // Only if the string is all in uppercase
-         if (sanitizedSentence === sanitizedSentence.toUpperCase()) {
+         if (textContent === textContent.toUpperCase()) {
            sentence = sentence.toLowerCase()
            sentence = sentence.charAt(0).toUpperCase() + sentence.slice(1)
          }

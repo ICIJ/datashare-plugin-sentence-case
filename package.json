@@ -4,6 +4,7 @@
   "description": "A Datashare Plugin to add a sentence case button to the extracted text view.",
   "main": "dist/index.umd.js",
   "dependencies": {
+    "dompurify": "^3.3.1",
     "sbd": "^1.0.16",
     "vue": "^3.4.29"
   },
